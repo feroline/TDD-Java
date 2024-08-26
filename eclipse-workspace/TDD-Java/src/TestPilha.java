@@ -8,7 +8,7 @@ class TestPilha {
 	@Test
 	void pilhaVazia() {
 		//inicializa a classe pilha com capacidade 10, neste caso de arrays
-		Pilha pilha = new Pilha(10);
+		Pilha pilha = new Pilha();
 		
 		//verifica se o método retorna 'true'. O método verifica se a pilha está vazia.
 		assertTrue(pilha.isVazia());
