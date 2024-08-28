@@ -1,10 +1,7 @@
-
-
 public class Pilha {
 
 	private Object[] pilhaValue;
-	private int tamanhoPilha = 0;
-	
+	private int tamanhoPilha = 0;	
 	
 	public Pilha(int tamanhoMax) {
 		pilhaValue = new Object[tamanhoMax];
@@ -38,7 +35,7 @@ public class Pilha {
 	public void empilhar(Object conteudo) {
 		
 		if(tamanhoPilha == pilhaValue.length )
-			throw new PilhaCheiaException("A pilha atingiu o limite e estourou :(");
+			throw new PilhaCheiaException(MessagesExceptions.PILHA_CHEIA.toString());
 	
 		setConteudoPilha(conteudo);
 		setTamanho(true);
@@ -47,7 +44,7 @@ public class Pilha {
 	public Object desempilhar() {
 		
 		if(isVazia()) 
-			throw new PilhaVaziaException("A pilha está vazia e não é possível desempilhar");
+			throw new PilhaVaziaException(MessagesExceptions.PILHA_VAZIA.toString());
 	
 		setTamanho(false);
 		return getTopoDaPilha();

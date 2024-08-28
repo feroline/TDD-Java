@@ -8,24 +8,7 @@ class TestPilha {
 	
 	private Pilha pilha; 
 	private int tamanhoMax = 10;
-	private String msgExceptionPilhaCheia = "A pilha atingiu o limite e estourou :("; 
-	private String msgExceptionPilhaVazia = "A pilha está vazia e não é possível desempilhar";
-	
-	private String getMsgException(RuntimeException exception) {
-		return exception.getMessage();
-	}
-	
-	private void empilharByQuant(int quantidade) {
-		for(int i = 0; i < quantidade; i++) {
-			pilha.empilhar("conteúdo "+ i);
-		}
-		
-	}
 
-	private void verificaTamanhoPilha(int tamanhoEsperado) {
-		assertEquals(tamanhoEsperado,pilha.getTamanho());
-	}
-	
 	
 	@BeforeEach
 	public void inicializarPilha() {
@@ -48,7 +31,8 @@ class TestPilha {
 		
 		assertFalse(pilha.isVazia()); 
 		verificaTamanhoPilha(1);
-		assertEquals(pilhaValue, pilha.getTopoDaPilha());
+		verificarTopoPilha(pilhaValue);
+		
 	}
 	
 	@Test
@@ -57,18 +41,15 @@ class TestPilha {
 		Object value1 = "Primeiro";
 		Object value2 = "Segundo"; 
 	
-		//empilha 2 e verifica
 		pilha.empilhar(value1);
-		pilha.empilhar(value2);	
-		
+		pilha.empilhar(value2);		
 		verificaTamanhoPilha(2);
-		assertEquals(value2,pilha.getTopoDaPilha());
+		verificarTopoPilha(value2);
 		
-		//desempilha 1 e verifica 
 		pilha.desempilhar();
-		
+
 		verificaTamanhoPilha(1);
-		assertEquals(value1, pilha.getTopoDaPilha());
+		verificarTopoPilha(value1);
 		
 	}
 	
@@ -76,7 +57,7 @@ class TestPilha {
 	void desempilharPilhaVazia() {
 		
 		PilhaVaziaException exception = assertThrows(PilhaVaziaException.class, () -> pilha.desempilhar());
-	    assertTrue(getMsgException(exception).contains(msgExceptionPilhaVazia));
+	    assertTrue(getMsgException(exception).contains(MessagesExceptions.PILHA_VAZIA.toString()));
 	    
 	}
 	
@@ -87,11 +68,31 @@ class TestPilha {
 		
 		try{
 			pilha.empilhar("BOOOM!! Estourou"); 
-			fail(); //se não deu a exceção irá para o catch
+			fail();
 		}catch(PilhaCheiaException exception) {
-			assertTrue(getMsgException(exception).contains(msgExceptionPilhaCheia));
+			assertTrue(getMsgException(exception).contains(MessagesExceptions.PILHA_CHEIA.toString()));
 		}
 	
+	}
+	
+
+	private String getMsgException(RuntimeException exception) {
+		return exception.getMessage();
+	}
+	
+	private void empilharByQuant(int quantidade) {
+		for(int i = 0; i < quantidade; i++) {
+			pilha.empilhar("conteúdo "+ i);
+		}
+		
+	}
+
+	private void verificaTamanhoPilha(int tamanhoEsperado) {
+		assertEquals(tamanhoEsperado,pilha.getTamanho());
+	}
+	
+	private void verificarTopoPilha(Object valor) {
+		assertEquals(valor,pilha.getTopoDaPilha());
 	}
 	
 	
