@@ -23,7 +23,7 @@ class TestPilha {
 	}
 
 	private void verificaTamanhoPilha(int tamanhoEsperado) {
-		assertEquals(tamanhoEsperado,pilha.tamanho());
+		assertEquals(tamanhoEsperado,pilha.getTamanho());
 	}
 	
 	
@@ -48,7 +48,7 @@ class TestPilha {
 		
 		assertFalse(pilha.isVazia()); 
 		verificaTamanhoPilha(1);
-		assertEquals(pilhaValue, pilha.topoDaPilha());
+		assertEquals(pilhaValue, pilha.getTopoDaPilha());
 	}
 	
 	@Test
@@ -62,13 +62,13 @@ class TestPilha {
 		pilha.empilhar(value2);	
 		
 		verificaTamanhoPilha(2);
-		assertEquals(value2,pilha.topoDaPilha());
+		assertEquals(value2,pilha.getTopoDaPilha());
 		
 		//desempilha 1 e verifica 
 		pilha.desempilhar();
 		
 		verificaTamanhoPilha(1);
-		assertEquals(value1, pilha.topoDaPilha());
+		assertEquals(value1, pilha.getTopoDaPilha());
 		
 	}
 	

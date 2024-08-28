@@ -3,7 +3,7 @@
 public class Pilha {
 
 	private Object[] pilhaValue;
-	private int quantidade = 0;
+	private int tamanhoPilha = 0;
 	
 	
 	public Pilha(int tamanhoMax) {
@@ -11,37 +11,46 @@ public class Pilha {
 	}
 
 	public Boolean isVazia() {
-		return (quantidade == 0); // equivale a: (pilhaValue == null) ? true : false; 
+		return (tamanhoPilha == 0);
 	}
 
-	public int tamanho() {
-		return this.quantidade; //retorna a quantidade na pilha
+	public int getTamanho() {
+		return this.tamanhoPilha; 
 	}
-
-	public void empilhar(Object conteudo) { //FIXME: Talvez seja necessário converter para Object 
+	
+	public Object getTopoDaPilha() {
+		return this.pilhaValue[tamanhoPilha-1];
+	}
+	
+	private void setTamanho(Boolean isAdicionar) {
+		if(isAdicionar) {
+			this.tamanhoPilha ++;	
+		}else {
+			this.tamanhoPilha --; 
+		}
 		
-		if(quantidade == pilhaValue.length )
+	}
+	
+	private void setConteudoPilha(Object conteudo) {
+		this.pilhaValue[tamanhoPilha] = conteudo;
+	}
+
+	public void empilhar(Object conteudo) {
+		
+		if(tamanhoPilha == pilhaValue.length )
 			throw new PilhaCheiaException("A pilha atingiu o limite e estourou :(");
 	
-		
-		this.pilhaValue[quantidade] = conteudo; //guardo o valor da pilha recebido, pois será utilizado futuramente
-		this.quantidade ++; //incrementa a quantidade
-	}
-
-	public Object topoDaPilha() {
-		return this.pilhaValue[quantidade-1];
+		setConteudoPilha(conteudo);
+		setTamanho(true);
 	}
 	
 	public Object desempilhar() {
-		String mensagemErro = "A pilha está vazia e não é possível desempilhar";
 		
 		if(isVazia()) 
-			throw new PilhaVaziaException(mensagemErro);
+			throw new PilhaVaziaException("A pilha está vazia e não é possível desempilhar");
 	
-			
-		Object topo = topoDaPilha(); 
-		quantidade --; 
-		return topo;
+		setTamanho(false);
+		return getTopoDaPilha();
 	}
 
 }
